@@ -1,0 +1,4293 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>雑！ｻｲﾄ管理・ログ - ログインログ</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+        /* General */
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://discord.com/assets/6c6374bad0b0b6d204d8d6dc4a18d820.woff);
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://discord.com/assets/e8acd7d9bf6207f99350ca9f9e23b168.woff);
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://discord.com/assets/3bdef1251a424500c1b3a78dea9b7e57.woff);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://discord.com/assets/be0060dafb7a0e31d2a1ca17c0708636.woff);
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://discord.com/assets/8e12fb4f14d9c4592eb8ec9f22337b04.woff);
+    font-weight: 700;
+}
+
+body {
+    font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 17px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    object-fit: contain;
+}
+
+.markdown {
+    max-width: 100%;
+    white-space: pre-wrap;
+    line-height: 1.3;
+    overflow-wrap: break-word;
+}
+
+.spoiler {
+    width: fit-content;
+}
+
+.spoiler--hidden {
+    cursor: pointer;
+}
+
+.spoiler-text {
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-text {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler--hidden .spoiler-text::selection {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-image {
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.spoiler--hidden .spoiler-image img {
+    filter: blur(44px);
+}
+
+.spoiler--hidden .spoiler-image:after {
+    content: "SPOILER";
+    color: #dcddde;
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 600;
+    padding: 0.5em 0.7em;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    font-size: 0.9em;
+}
+
+.spoiler--hidden:hover .spoiler-image:after {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.quote {
+    margin: 0.1em 0;
+    padding-left: 0.6em;
+    border-left: 4px solid;
+    border-radius: 3px;
+}
+
+.pre {
+    font-family: "Consolas", "Courier New", Courier, monospace;
+}
+
+.pre--multiline {
+    margin-top: 0.25em;
+    padding: 0.5em;
+    border: 2px solid;
+    border-radius: 5px;
+}
+
+.pre--inline {
+    padding: 2px;
+    border-radius: 3px;
+    font-size: 0.85em;
+}
+
+.mention {
+    border-radius: 3px;
+    padding: 0 2px;
+    color: #7289da;
+    background: rgba(114, 137, 218, .1);
+    font-weight: 500;
+}
+
+.emoji {
+    width: 1.25em;
+    height: 1.25em;
+    margin: 0 0.06em;
+    vertical-align: -0.4em;
+}
+
+.emoji--small {
+    width: 1em;
+    height: 1em;
+}
+
+.emoji--large {
+    width: 2.8em;
+    height: 2.8em;
+}
+
+/* Preamble */
+
+.preamble {
+    display: grid;
+    margin: 0 0.3em 0.6em 0.3em;
+    max-width: 100%;
+    grid-template-columns: auto 1fr;
+}
+
+.preamble__guild-icon-container {
+    grid-column: 1;
+}
+
+.preamble__guild-icon {
+    max-width: 88px;
+    max-height: 88px;
+}
+
+.preamble__entries-container {
+    grid-column: 2;
+    margin-left: 0.6em;
+}
+
+.preamble__entry {
+    font-size: 1.4em;
+}
+
+.preamble__entry--small {
+    font-size: 1em;
+}
+
+/* Chatlog */
+
+.chatlog {
+    max-width: 100%;
+}
+
+.chatlog__message-group {
+    display: grid;
+    margin: 0 0.6em;
+    padding: 0.9em 0;
+    border-top: 1px solid;
+    grid-template-columns: auto 1fr;
+}
+
+.chatlog__author-avatar-container {
+    grid-column: 1;
+    width: 40px;
+    height: 40px;
+}
+
+.chatlog__author-avatar {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
+.chatlog__messages {
+    grid-column: 2;
+    margin-left: 1.2em;
+    min-width: 50%;
+}
+
+.chatlog__author-name {
+    font-weight: 500;
+}
+
+.chatlog__timestamp {
+    margin-left: 0.3em;
+    font-size: 0.75em;
+}
+
+.chatlog__message {
+    padding: 0.1em 0.3em;
+    margin: 0 -0.3em;
+    background-color: transparent;
+    transition: background-color 1s ease;
+}
+
+.chatlog__content {
+    font-size: 0.95em;
+    word-wrap: break-word;
+}
+
+.chatlog__edited-timestamp {
+    margin-left: 0.15em;
+    font-size: 0.8em;
+}
+
+.chatlog__attachment {
+    margin-top: 0.3em;
+}
+
+.chatlog__attachment-thumbnail {
+    vertical-align: top;
+    max-width: 45vw;
+    max-height: 500px;
+    border-radius: 3px;
+}
+
+.chatlog__embed {
+    display: flex;
+    margin-top: 0.3em;
+    max-width: 520px;
+}
+
+.chatlog__embed-color-pill {
+    flex-shrink: 0;
+    width: 0.25em;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.chatlog__embed-content-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em 0.6em;
+    border: 1px solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.chatlog__embed-content {
+    display: flex;
+    width: 100%;
+}
+
+.chatlog__embed-text {
+    flex: 1;
+}
+
+.chatlog__embed-author {
+    display: flex;
+    margin-bottom: 0.3em;
+    align-items: center;
+}
+
+.chatlog__embed-author-icon {
+    margin-right: 0.5em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.chatlog__embed-author-name {
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-title {
+    margin-bottom: 0.2em;
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-description {
+    font-weight: 500;
+    font-size: 0.85em;
+}
+
+.chatlog__embed-fields {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chatlog__embed-field {
+    flex: 0;
+    min-width: 100%;
+    max-width: 506px;
+    padding-top: 0.6em;
+    font-size: 0.875em;
+}
+
+.chatlog__embed-field--inline {
+    flex: 1;
+    flex-basis: auto;
+    min-width: 150px;
+}
+
+.chatlog__embed-field-name {
+    margin-bottom: 0.2em;
+    font-weight: 600;
+}
+
+.chatlog__embed-field-value {
+    font-weight: 500;
+}
+
+.chatlog__embed-thumbnail {
+    flex: 0;
+    margin-left: 1.2em;
+    max-width: 80px;
+    max-height: 80px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-image-container {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-image {
+    max-width: 500px;
+    max-height: 400px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-footer {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-footer-icon {
+    margin-right: 0.2em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.chatlog__embed-footer-text {
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+.chatlog__reactions {
+    display: flex;
+}
+
+.chatlog__reaction {
+    display: flex;
+    align-items: center;
+    margin: 0.35em 0.1em 0.1em 0.1em;
+    padding: 0.2em 0.35em;
+    border-radius: 3px;
+}
+
+.chatlog__reaction-count {
+    min-width: 9px;
+    margin-left: 0.35em;
+    font-size: 0.875em;
+}
+
+.chatlog__bot-tag {
+    position: relative;
+    top: -.2em;
+    margin-left: 0.3em;
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+    vertical-align: middle;
+    line-height: 1.3;
+    background: #7289da;
+    color: #ffffff;
+    font-size: 0.625em;
+    font-weight: 500;
+}
+
+/* Postamble */
+
+.postamble {
+    margin: 1.4em 0.3em 0.6em 0.3em;
+    padding: 1em;
+    border-top: 1px solid;
+}
+    </style>
+    <style>
+        /* General */
+
+body {
+    background-color: #36393e;
+    color: #dcddde;
+}
+
+a {
+    color: #0096cf;
+}
+
+.spoiler-text {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.spoiler--hidden .spoiler-text {
+    background-color: #202225;
+}
+
+.spoiler--hidden:hover .spoiler-text {
+    background-color: rgba(32, 34, 37, 0.8);
+}
+
+.quote {
+    border-color: #4f545c;
+}
+
+.pre {
+    background-color: #2f3136 !important;
+}
+
+.pre--multiline {
+    border-color: #282b30 !important;
+    color: #b9bbbe !important;
+}
+
+/* === Preamble === */
+
+.preamble__entry {
+    color: #ffffff;
+}
+
+/* Chatlog */
+
+.chatlog__message-group {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.chatlog__author-name {
+    color: #ffffff;
+}
+
+.chatlog__timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__message--highlighted {
+    background-color: rgba(114, 137, 218, 0.2) !important;
+}
+
+.chatlog__message--pinned {
+    background-color: rgba(249, 168, 37, 0.05);
+}
+
+.chatlog__edited-timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__embed-color-pill--default {
+    background-color: rgba(79, 84, 92, 1);
+}
+
+.chatlog__embed-content-container {
+    background-color: rgba(46, 48, 54, 0.3);
+    border-color: rgba(46, 48, 54, 0.6);
+}
+
+.chatlog__embed-author-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-author-name-link {
+    color: #ffffff;
+}
+
+.chatlog__embed-title {
+    color: #ffffff;
+}
+
+.chatlog__embed-description {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__embed-field-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-field-value {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__embed-footer {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__reaction {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.chatlog__reaction-count {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Postamble */
+
+.postamble {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.postamble__entry {
+    color: #ffffff;
+}
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.pre--multiline').forEach(block => hljs.highlightBlock(block));
+        });
+    </script>
+
+    <script>
+        function scrollToMessage(event, id) {
+            var element = document.getElementById('message-' + id);
+
+            if (element) {
+                event.preventDefault();
+
+                element.classList.add('chatlog__message--highlighted');
+
+                window.scrollTo({
+                    top: element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - (window.innerHeight / 2),
+                    behavior: 'smooth'
+                });
+
+                window.setTimeout(function() {
+                    element.classList.remove('chatlog__message--highlighted');
+                }, 2000);
+            }
+        }
+
+        function showSpoiler(event, element) {
+            if (element && element.classList.contains('spoiler--hidden')) {
+                event.preventDefault();
+                element.classList.remove('spoiler--hidden');
+            }
+        }
+    </script>
+</head>
+<body>
+
+<div class="preamble">
+    <div class="preamble__guild-icon-container">
+        <img class="preamble__guild-icon" src="https://cdn.discordapp.com/icons/645232261159190548/0db6e8bbf2f8cc79b3516198a94b28f3.png" alt="Guild icon">
+    </div>
+    <div class="preamble__entries-container">
+        <div class="preamble__entry">雑！ｻｲﾄ管理・ログ</div>
+        <div class="preamble__entry">m-第3区画:『ﾛｸﾞｲﾝ・ﾛｸﾞｱｳﾄ』 / ログインログ</div>
+
+            <div class="preamble__entry preamble__entry--small">__**zatsukomu.tk**__
+==================================================
+製作者によってドメイン、ホストサーバーが管理・運営されています。
+==================================================
+このサイトのログインシステム機能は、7yultukuri7(id: 352394784440320020)によって作成された機能です。このホストサーバーのスクリプトは、世界中には公開したくありません。(限定公開となります。)
+また、製作者が運営を去ったあとにはこのサイトにアクセス・利用できなくなる可能性がございます。
+アクセス・利用できなくなったからと言っていかなる場合であろうとも後継の機能制作・実装する事を禁じます。</div>
+
+    </div>
+</div>
+
+<div class="chatlog">
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">25-Nov-19 05:38 PM</span>
+
+            <div class="chatlog__message " data-message-id="648442342268731402" id="message-648442342268731402">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 7yultukuri7#0960
+ユーザーid: 352394784440320020</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+25-Nov-19 05:38 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">25-Nov-19 09:22 PM</span>
+
+            <div class="chatlog__message " data-message-id="648498812058337285" id="message-648498812058337285">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 7yultukuri7#0960
+ユーザーid: 352394784440320020</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+25-Nov-19 09:22 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="648498927515205642" id="message-648498927515205642">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 7yultukuri7#0960
+ユーザーid: 352394784440320020</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+25-Nov-19 09:23 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Nov-19 06:56 PM</span>
+
+            <div class="chatlog__message " data-message-id="649186698676273152" id="message-649186698676273152">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 7yultukuri7#0960
+ユーザーid: 352394784440320020</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+27-Nov-19 06:56 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="649188255497191435" id="message-649188255497191435">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: ?Sw()m%kLc$VfD!!#6027
+ユーザーid: 631786733511376916</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/631786733511376916/93772615c3d3b46ef0b12560b8b452ec.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/631786733511376916/93772615c3d3b46ef0b12560b8b452ec.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+27-Nov-19 07:02 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Nov-19 07:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="649195628823576576" id="message-649195628823576576">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 暇人村長きずき / kizuki1749#1749
+ユーザーid: 333559514445905920</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/333559514445905920/a_c4202b32be8d827f6598afea07593ebe.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/333559514445905920/a_c4202b32be8d827f6598afea07593ebe.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+27-Nov-19 07:31 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="649195633051172866" id="message-649195633051172866">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 暇人村長きずき / kizuki1749#1749
+ユーザーid: 333559514445905920</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/333559514445905920/a_c4202b32be8d827f6598afea07593ebe.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/333559514445905920/a_c4202b32be8d827f6598afea07593ebe.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+27-Nov-19 07:31 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="649195834709377034" id="message-649195834709377034">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: Mirakuru223(ミラクル兄貴)#1344
+ユーザーid: 312572592773005325</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/312572592773005325/9643cf7ee56249555932c7e765271965.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/312572592773005325/9643cf7ee56249555932c7e765271965.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+27-Nov-19 07:32 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="649196846836744208" id="message-649196846836744208">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: みずき#2707
+ユーザーid: 313253959655751680</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/313253959655751680/21afdbe27a13c8b7110b17b74b767f77.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/313253959655751680/21afdbe27a13c8b7110b17b74b767f77.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+27-Nov-19 07:36 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Nov-19 08:05 PM</span>
+
+            <div class="chatlog__message " data-message-id="649204071940489226" id="message-649204071940489226">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: Haruchan_JP#4637
+ユーザーid: 259435328715227136</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/259435328715227136/4247cff34bd405df2c980afe4269abbf.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/259435328715227136/4247cff34bd405df2c980afe4269abbf.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+27-Nov-19 08:05 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Nov-19 10:21 PM</span>
+
+            <div class="chatlog__message " data-message-id="649238425739984908" id="message-649238425739984908">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 竹＠Take#5558
+ユーザーid: 263603891138985984</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/263603891138985984/c946e98d13d6ea98420418dc083beb87.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/263603891138985984/c946e98d13d6ea98420418dc083beb87.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+27-Nov-19 10:21 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">28-Nov-19 04:10 PM</span>
+
+            <div class="chatlog__message " data-message-id="649507464181448705" id="message-649507464181448705">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 7yultukuri7#0960
+ユーザーid: 352394784440320020</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+28-Nov-19 04:10 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">29-Nov-19 05:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="649889787121106954" id="message-649889787121106954">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: ik#3078
+ユーザーid: 482750703438397461</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/482750703438397461/741d8580dbb8784ddb36b4f3c0c9ba49.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/482750703438397461/741d8580dbb8784ddb36b4f3c0c9ba49.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+29-Nov-19 05:29 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">29-Nov-19 05:54 PM</span>
+
+            <div class="chatlog__message " data-message-id="649896001230077962" id="message-649896001230077962">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: カッシー#5706
+ユーザーid: 519434882460549169</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/519434882460549169/b24590015ea970aa7529e01a676b5d7e.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/519434882460549169/b24590015ea970aa7529e01a676b5d7e.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+29-Nov-19 05:54 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="649896003750723584" id="message-649896003750723584">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: カッシー#5706
+ユーザーid: 519434882460549169</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/519434882460549169/b24590015ea970aa7529e01a676b5d7e.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/519434882460549169/b24590015ea970aa7529e01a676b5d7e.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+29-Nov-19 05:54 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/352394784440320020/2eeb4657d40176fc45e86f4163ee2108.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="-&#127775;7yultukuri7-#0960" data-user-id="352394784440320020" style="color: rgb(46,204,113)">-&#127775;7yultukuri7-</span>
+
+
+        <span class="chatlog__timestamp">29-Nov-19 06:02 PM</span>
+
+            <div class="chatlog__message " data-message-id="649897907385925642" id="message-649897907385925642">
+                <div class="chatlog__content">
+                    <div class="markdown">ダブルクリックすると、2回認証してしまう... </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Nov-19 10:03 AM</span>
+
+            <div class="chatlog__message " data-message-id="650139731790659614" id="message-650139731790659614">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: daima3629#1235
+ユーザーid: 570243143958528010</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/570243143958528010/cbbd6aa34c3c77b63d41b7a0246b688e.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/570243143958528010/cbbd6aa34c3c77b63d41b7a0246b688e.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+30-Nov-19 10:03 AM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">02-Dec-19 12:13 AM</span>
+
+            <div class="chatlog__message " data-message-id="650715993173393428" id="message-650715993173393428">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: PenguinLucky#4907
+ユーザーid: 349527453246685184</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/349527453246685184/eddf6dbba89310f24662dd3c1fe30f7c.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/349527453246685184/eddf6dbba89310f24662dd3c1fe30f7c.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+02-Dec-19 12:13 AM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-Dec-19 10:57 PM</span>
+
+            <div class="chatlog__message " data-message-id="652146467187982336" id="message-652146467187982336">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: takumi0213#0213
+ユーザーid: 525658651713601536</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/525658651713601536/ed52838c036427dd3539434876fa769e.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/525658651713601536/ed52838c036427dd3539434876fa769e.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+05-Dec-19 10:57 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">11-Dec-19 08:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="654281318200377365" id="message-654281318200377365">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: ShInobI#2871
+ユーザーid: 465441420488998912</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/465441420488998912/410374aa66fd748c50436a075f471045.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/465441420488998912/410374aa66fd748c50436a075f471045.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+11-Dec-19 08:20 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">13-Dec-19 05:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="654963198453219334" id="message-654963198453219334">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: カルp(ﾟДﾟq)#1159
+ユーザーid: 602672320146046988</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/602672320146046988/a843c24cb15fe5d26ed918a506ceb346.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/602672320146046988/a843c24cb15fe5d26ed918a506ceb346.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+13-Dec-19 05:29 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">17-Dec-19 09:49 PM</span>
+
+            <div class="chatlog__message " data-message-id="656478011851538442" id="message-656478011851538442">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 7yultukuri7#0960
+ユーザーid: 352394784440320020</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+17-Dec-19 09:49 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">19-Dec-19 09:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="657193201156882442" id="message-657193201156882442">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: サロにぃ/Saroniii#4584
+ユーザーid: 425478444067848204</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/425478444067848204/3154f828b06acc61ef04b51754f3c9f7.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/425478444067848204/3154f828b06acc61ef04b51754f3c9f7.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+19-Dec-19 09:11 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">23-Dec-19 01:58 AM</span>
+
+            <div class="chatlog__message " data-message-id="658352740283711509" id="message-658352740283711509">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 葵 -あおい-#0513
+ユーザーid: 508919483440693294</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/508919483440693294/af98469c488a2c4be5bb9d3b3bad50f5.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/508919483440693294/af98469c488a2c4be5bb9d3b3bad50f5.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+23-Dec-19 01:58 AM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">01-Jan-20 04:33 PM</span>
+
+            <div class="chatlog__message " data-message-id="661834364388245534" id="message-661834364388245534">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: namae#3808
+ユーザーid: 321316484989059102</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/321316484989059102/cfa19f13b5b5c099c1f6b8a576fd9918.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/321316484989059102/cfa19f13b5b5c099c1f6b8a576fd9918.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+01-Jan-20 04:33 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">04-Jan-20 08:40 PM</span>
+
+            <div class="chatlog__message " data-message-id="662983663880896522" id="message-662983663880896522">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 7yultukuri7#0960
+ユーザーid: 352394784440320020</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+04-Jan-20 08:40 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-Jan-20 05:12 AM</span>
+
+            <div class="chatlog__message " data-message-id="663112658928664576" id="message-663112658928664576">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: &#127800;天桜（あまざくら）/   amazakura#6115
+ユーザーid: 471181139093094400</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/471181139093094400/9562b577a7d9990a1665edc90cf1f920.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/471181139093094400/9562b577a7d9990a1665edc90cf1f920.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+05-Jan-20 05:12 AM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">06-Jan-20 08:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="663705011930267649" id="message-663705011930267649">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 7yultukuri7#0960
+ユーザーid: 352394784440320020</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+06-Jan-20 08:26 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">14-Jan-20 09:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="666616891724529664" id="message-666616891724529664">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: PenguinLucky#4907
+ユーザーid: 349527453246685184</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/349527453246685184/eddf6dbba89310f24662dd3c1fe30f7c.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/349527453246685184/eddf6dbba89310f24662dd3c1fe30f7c.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+14-Jan-20 09:17 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">14-Jan-20 10:15 PM</span>
+
+            <div class="chatlog__message " data-message-id="666631420143468554" id="message-666631420143468554">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: K.N Derorin719#7304
+ユーザーid: 344780400138256384</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/344780400138256384/08274f72db84a415bb5c2d891a035710.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/344780400138256384/08274f72db84a415bb5c2d891a035710.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+14-Jan-20 10:15 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">15-Jan-20 06:13 PM</span>
+
+            <div class="chatlog__message " data-message-id="666932911567536134" id="message-666932911567536134">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: &#127800;天桜（あまざくら）/   amazakura#6115
+ユーザーid: 471181139093094400</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/471181139093094400/9562b577a7d9990a1665edc90cf1f920.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/471181139093094400/9562b577a7d9990a1665edc90cf1f920.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+15-Jan-20 06:13 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">16-Jan-20 01:22 AM</span>
+
+            <div class="chatlog__message " data-message-id="667041017379422248" id="message-667041017379422248">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: beryllium.jp#1631
+ユーザーid: 595586622876155904</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/595586622876155904/31e551385463ff52bbbc603bbf3f780a.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/595586622876155904/31e551385463ff52bbbc603bbf3f780a.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+16-Jan-20 01:22 AM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">02-Feb-20 01:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="673383751845150770" id="message-673383751845150770">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: &#127800;天桜（あまざくら）/   amazakura#6115
+ユーザーid: 471181139093094400</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/471181139093094400/9562b577a7d9990a1665edc90cf1f920.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/471181139093094400/9562b577a7d9990a1665edc90cf1f920.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+02-Feb-20 01:26 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">07-Feb-20 10:13 AM</span>
+
+            <div class="chatlog__message " data-message-id="675147175772160012" id="message-675147175772160012">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: みずき#2707
+ユーザーid: 313253959655751680</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/313253959655751680/21afdbe27a13c8b7110b17b74b767f77.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/313253959655751680/21afdbe27a13c8b7110b17b74b767f77.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+07-Feb-20 10:13 AM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">08-Feb-20 11:48 PM</span>
+
+            <div class="chatlog__message " data-message-id="675714474367385613" id="message-675714474367385613">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: &#127800;天桜（あまざくら）/   amazakura#6115
+ユーザーid: 471181139093094400</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/471181139093094400/9562b577a7d9990a1665edc90cf1f920.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/471181139093094400/9562b577a7d9990a1665edc90cf1f920.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+08-Feb-20 11:48 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">09-Feb-20 10:49 AM</span>
+
+            <div class="chatlog__message " data-message-id="675880819000082466" id="message-675880819000082466">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: みるくてぃ#7777
+ユーザーid: 465093115137753089</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/465093115137753089/965fdc71a55f957ba2308571dcf62c7c.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/465093115137753089/965fdc71a55f957ba2308571dcf62c7c.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+09-Feb-20 10:49 AM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">10-Feb-20 10:50 PM</span>
+
+            <div class="chatlog__message " data-message-id="676424804651368459" id="message-676424804651368459">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: ik#3078
+ユーザーid: 482750703438397461</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/482750703438397461/741d8580dbb8784ddb36b4f3c0c9ba49.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/482750703438397461/741d8580dbb8784ddb36b4f3c0c9ba49.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+10-Feb-20 10:50 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">11-Feb-20 05:39 PM</span>
+
+            <div class="chatlog__message " data-message-id="676708816682745878" id="message-676708816682745878">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: beryllium.jp#1631
+ユーザーid: 595586622876155904</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/595586622876155904/31e551385463ff52bbbc603bbf3f780a.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/595586622876155904/31e551385463ff52bbbc603bbf3f780a.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+11-Feb-20 05:39 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">14-Feb-20 03:02 PM</span>
+
+            <div class="chatlog__message " data-message-id="677756440672468992" id="message-677756440672468992">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 7yultukuri7#0960
+ユーザーid: 352394784440320020</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+14-Feb-20 03:02 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">24-Feb-20 12:42 PM</span>
+
+            <div class="chatlog__message " data-message-id="681345142300737537" id="message-681345142300737537">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 7yultukuri7#0960
+ユーザーid: 352394784440320020</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+24-Feb-20 12:42 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/664790701783121920/e3a5070f8f67b9b2cea56de1b8cc9116.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="dev.zatsukomu.tk#0574" data-user-id="664790701783121920" style="color: rgb(52,152,219)">dev.zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">24-Feb-20 01:02 PM</span>
+
+            <div class="chatlog__message " data-message-id="681350124491767838" id="message-681350124491767838">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 7yultukuri7 sub#8042
+ユーザーid: 386840140976226304</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/386840140976226304/f273713644c31ea3bfe3fcee3346f339.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/386840140976226304/f273713644c31ea3bfe3fcee3346f339.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+24-Feb-20 01:02 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/352394784440320020/2eeb4657d40176fc45e86f4163ee2108.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="-&#127775;7yultukuri7-#0960" data-user-id="352394784440320020" style="color: rgb(46,204,113)">-&#127775;7yultukuri7-</span>
+
+
+        <span class="chatlog__timestamp">24-Feb-20 01:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="681353733287837737" id="message-681353733287837737">
+                <div class="chatlog__content">
+                    <div class="markdown">v2.0
+-------------------- -------------------- --------------------
+-------------------- -------------------- --------------------
+-------------------- -------------------- --------------------
+v2.1 </div>
+                </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">24-Feb-20 01:27 PM</span>
+
+            <div class="chatlog__message " data-message-id="681356573926621195" id="message-681356573926621195">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 7yultukuri7#0960
+ユーザーid: 352394784440320020</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+24-Feb-20 01:27 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="681357209916932116" id="message-681357209916932116">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 7yultukuri7 sub#8042
+ユーザーid: 386840140976226304</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/386840140976226304/f273713644c31ea3bfe3fcee3346f339.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/386840140976226304/f273713644c31ea3bfe3fcee3346f339.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+24-Feb-20 01:30 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">24-Feb-20 10:57 PM</span>
+
+            <div class="chatlog__message " data-message-id="681499977872441364" id="message-681499977872441364">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: みずき#2707
+ユーザーid: 313253959655751680</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/313253959655751680/6f5684f628f37ec30ded6aa63a73482c.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/313253959655751680/6f5684f628f37ec30ded6aa63a73482c.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+24-Feb-20 10:57 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">24-Feb-20 11:04 PM</span>
+
+            <div class="chatlog__message " data-message-id="681501801005973536" id="message-681501801005973536">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: みずき#2707
+ユーザーid: 313253959655751680</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/313253959655751680/6f5684f628f37ec30ded6aa63a73482c.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/313253959655751680/6f5684f628f37ec30ded6aa63a73482c.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+24-Feb-20 11:04 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">25-Feb-20 01:04 AM</span>
+
+            <div class="chatlog__message " data-message-id="681532000640958619" id="message-681532000640958619">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: PenguinLucky#4907
+ユーザーid: 349527453246685184</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/349527453246685184/eddf6dbba89310f24662dd3c1fe30f7c.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/349527453246685184/eddf6dbba89310f24662dd3c1fe30f7c.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+25-Feb-20 01:04 AM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">25-Feb-20 01:42 PM</span>
+
+            <div class="chatlog__message " data-message-id="681722661642043445" id="message-681722661642043445">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: Tamayua#6115
+ユーザーid: 657564650996760598</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/657564650996760598/473f9b7f1ef19ddf0cb2aacb2100b28a.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/657564650996760598/473f9b7f1ef19ddf0cb2aacb2100b28a.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+25-Feb-20 01:42 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Feb-20 03:10 PM</span>
+
+            <div class="chatlog__message " data-message-id="682469567188172828" id="message-682469567188172828">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: Tamayua#6115
+ユーザーid: 657564650996760598</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/657564650996760598/473f9b7f1ef19ddf0cb2aacb2100b28a.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/657564650996760598/473f9b7f1ef19ddf0cb2aacb2100b28a.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+27-Feb-20 03:10 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-Mar-20 05:24 PM</span>
+
+            <div class="chatlog__message " data-message-id="685040063461195914" id="message-685040063461195914">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: Tamayua#6115
+ユーザーid: 657564650996760598</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/657564650996760598/473f9b7f1ef19ddf0cb2aacb2100b28a.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/657564650996760598/473f9b7f1ef19ddf0cb2aacb2100b28a.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+05-Mar-20 05:24 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">06-Mar-20 09:02 PM</span>
+
+            <div class="chatlog__message " data-message-id="685457320914059304" id="message-685457320914059304">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: レイエス#8473
+ユーザーid: 305701836411764737</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/305701836411764737/7f7df8dfc92c42c7b6fbf82f76fa795d.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/305701836411764737/7f7df8dfc92c42c7b6fbf82f76fa795d.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+06-Mar-20 09:02 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="685459003165114379" id="message-685459003165114379">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: レイエス#8473
+ユーザーid: 305701836411764737</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/305701836411764737/7f7df8dfc92c42c7b6fbf82f76fa795d.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/305701836411764737/7f7df8dfc92c42c7b6fbf82f76fa795d.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+06-Mar-20 09:09 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">07-Mar-20 04:06 PM</span>
+
+            <div class="chatlog__message " data-message-id="685745190773850112" id="message-685745190773850112">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: Tamayua#6115
+ユーザーid: 657564650996760598</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/657564650996760598/473f9b7f1ef19ddf0cb2aacb2100b28a.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/657564650996760598/473f9b7f1ef19ddf0cb2aacb2100b28a.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+07-Mar-20 04:06 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="685745192740847655" id="message-685745192740847655">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: Tamayua#6115
+ユーザーid: 657564650996760598</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/657564650996760598/473f9b7f1ef19ddf0cb2aacb2100b28a.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/657564650996760598/473f9b7f1ef19ddf0cb2aacb2100b28a.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+07-Mar-20 04:06 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">07-Mar-20 08:46 PM</span>
+
+            <div class="chatlog__message " data-message-id="685815708596043918" id="message-685815708596043918">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: Tamayua#6115
+ユーザーid: 657564650996760598</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/657564650996760598/473f9b7f1ef19ddf0cb2aacb2100b28a.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/657564650996760598/473f9b7f1ef19ddf0cb2aacb2100b28a.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+07-Mar-20 08:46 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">07-Mar-20 09:32 PM</span>
+
+            <div class="chatlog__message " data-message-id="685827117933789269" id="message-685827117933789269">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: Alpha Null 16299#0001
+ユーザーid: 548058577848238080</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/548058577848238080/0df752d4505daae3af0e18a6dbac125f.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/548058577848238080/0df752d4505daae3af0e18a6dbac125f.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+07-Mar-20 09:32 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">09-Mar-20 05:23 PM</span>
+
+            <div class="chatlog__message " data-message-id="686489379237134356" id="message-686489379237134356">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 7yultukuri7#0960
+ユーザーid: 352394784440320020</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+09-Mar-20 05:23 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">10-Mar-20 06:00 PM</span>
+
+            <div class="chatlog__message " data-message-id="686860948337983491" id="message-686860948337983491">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 7yultukuri7#0960
+ユーザーid: 352394784440320020</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+10-Mar-20 06:00 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">14-Mar-20 12:20 AM</span>
+
+            <div class="chatlog__message " data-message-id="688043801104613442" id="message-688043801104613442">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: しかく#9278
+ユーザーid: 378403121220550656</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/378403121220550656/d45753e4ffe3efb171bf1e155fc4c2db.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/378403121220550656/d45753e4ffe3efb171bf1e155fc4c2db.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+14-Mar-20 12:20 AM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="688043810999369739" id="message-688043810999369739">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: しかく#9278
+ユーザーid: 378403121220550656</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/378403121220550656/d45753e4ffe3efb171bf1e155fc4c2db.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/378403121220550656/d45753e4ffe3efb171bf1e155fc4c2db.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+14-Mar-20 12:20 AM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">14-Mar-20 11:15 AM</span>
+
+            <div class="chatlog__message " data-message-id="688208733850828830" id="message-688208733850828830">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: Seraimu#7777
+ユーザーid: 447610895657467936</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/447610895657467936/a_791075546e2b72f612799e4de1b25251.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/447610895657467936/a_791075546e2b72f612799e4de1b25251.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+14-Mar-20 11:15 AM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">06-Apr-20 09:58 PM</span>
+
+            <div class="chatlog__message " data-message-id="696705418701045841" id="message-696705418701045841">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 7yultukuri7#0960
+ユーザーid: 352394784440320020</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+06-Apr-20 09:58 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">25-Apr-20 01:51 PM</span>
+
+            <div class="chatlog__message " data-message-id="703468287861981265" id="message-703468287861981265">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: Tamayua#6115
+ユーザーid: 657564650996760598</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/657564650996760598/a_1e8cdccd0fab4510b282a3d7ffc03794.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/657564650996760598/a_1e8cdccd0fab4510b282a3d7ffc03794.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+25-Apr-20 01:51 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">11-May-20 05:55 PM</span>
+
+            <div class="chatlog__message " data-message-id="709327840398802944" id="message-709327840398802944">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: Mirakuru223(ミラクル兄貴)#1344
+ユーザーid: 312572592773005325</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/312572592773005325/9643cf7ee56249555932c7e765271965.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/312572592773005325/9643cf7ee56249555932c7e765271965.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+11-May-20 05:55 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">11-May-20 09:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="709381431767334942" id="message-709381431767334942">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: うえきばち#7739
+ユーザーid: 253841410963406849</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/253841410963406849/91b27c0c27b3e93bca94170cb0814971.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/253841410963406849/91b27c0c27b3e93bca94170cb0814971.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+11-May-20 09:28 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">02-Jun-20 07:58 PM</span>
+
+            <div class="chatlog__message " data-message-id="717331294958387260" id="message-717331294958387260">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: 7yultukuri7#0960
+ユーザーid: 352394784440320020</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/352394784440320020/9c20f9dc6bba05fb7cc63efc2f67c479.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+02-Jun-20 07:58 PM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/645133895930478612/c58d027626e4b23f85055f06f7da13dd.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="zatsukomu.tk#0928" data-user-id="645133895930478612" style="color: rgb(52,152,219)">zatsukomu.tk</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-20 07:08 AM</span>
+
+            <div class="chatlog__message " data-message-id="737068980971503668" id="message-737068980971503668">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(46,254,46,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">ログインログ</div>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><div class="pre pre--multiline nohighlight">ユーザー名: Hiroxx#6945
+ユーザーid: 537962489325813763</div></div>
+                                        </div>
+
+                                </div>
+
+                                    <div class="chatlog__embed-thumbnail-container">
+                                        <a class="chatlog__embed-thumbnail-link" href="https://cdn.discordapp.com/avatars/537962489325813763/80ab3e1f81dad3140ab41920929436b5.png?size=1024">
+                                            <img class="chatlog__embed-thumbnail" src="https://cdn.discordapp.com/avatars/537962489325813763/80ab3e1f81dad3140ab41920929436b5.png?size=1024" alt="Thumbnail">
+                                        </a>
+                                    </div>
+                            </div>
+
+
+                                <div class="chatlog__embed-footer">
+
+                                        <span class="chatlog__embed-footer-text">
+
+
+27-Jul-20 07:08 AM                                        </span>
+                                </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+</div>
+
+<div class="postamble">
+    <div class="postamble__entry">Exported 67 message(s)</div>
+</div>
+
+</body>
+</html>

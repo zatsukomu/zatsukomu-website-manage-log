@@ -1,0 +1,3985 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>雑！ｻｲﾄ管理・ログ - private-7yultukuri7／discord-zatsukomu</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+        /* General */
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://discord.com/assets/6c6374bad0b0b6d204d8d6dc4a18d820.woff);
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://discord.com/assets/e8acd7d9bf6207f99350ca9f9e23b168.woff);
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://discord.com/assets/3bdef1251a424500c1b3a78dea9b7e57.woff);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://discord.com/assets/be0060dafb7a0e31d2a1ca17c0708636.woff);
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://discord.com/assets/8e12fb4f14d9c4592eb8ec9f22337b04.woff);
+    font-weight: 700;
+}
+
+body {
+    font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 17px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    object-fit: contain;
+}
+
+.markdown {
+    max-width: 100%;
+    white-space: pre-wrap;
+    line-height: 1.3;
+    overflow-wrap: break-word;
+}
+
+.spoiler {
+    width: fit-content;
+}
+
+.spoiler--hidden {
+    cursor: pointer;
+}
+
+.spoiler-text {
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-text {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler--hidden .spoiler-text::selection {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-image {
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.spoiler--hidden .spoiler-image img {
+    filter: blur(44px);
+}
+
+.spoiler--hidden .spoiler-image:after {
+    content: "SPOILER";
+    color: #dcddde;
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 600;
+    padding: 0.5em 0.7em;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    font-size: 0.9em;
+}
+
+.spoiler--hidden:hover .spoiler-image:after {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.quote {
+    margin: 0.1em 0;
+    padding-left: 0.6em;
+    border-left: 4px solid;
+    border-radius: 3px;
+}
+
+.pre {
+    font-family: "Consolas", "Courier New", Courier, monospace;
+}
+
+.pre--multiline {
+    margin-top: 0.25em;
+    padding: 0.5em;
+    border: 2px solid;
+    border-radius: 5px;
+}
+
+.pre--inline {
+    padding: 2px;
+    border-radius: 3px;
+    font-size: 0.85em;
+}
+
+.mention {
+    border-radius: 3px;
+    padding: 0 2px;
+    color: #7289da;
+    background: rgba(114, 137, 218, .1);
+    font-weight: 500;
+}
+
+.emoji {
+    width: 1.25em;
+    height: 1.25em;
+    margin: 0 0.06em;
+    vertical-align: -0.4em;
+}
+
+.emoji--small {
+    width: 1em;
+    height: 1em;
+}
+
+.emoji--large {
+    width: 2.8em;
+    height: 2.8em;
+}
+
+/* Preamble */
+
+.preamble {
+    display: grid;
+    margin: 0 0.3em 0.6em 0.3em;
+    max-width: 100%;
+    grid-template-columns: auto 1fr;
+}
+
+.preamble__guild-icon-container {
+    grid-column: 1;
+}
+
+.preamble__guild-icon {
+    max-width: 88px;
+    max-height: 88px;
+}
+
+.preamble__entries-container {
+    grid-column: 2;
+    margin-left: 0.6em;
+}
+
+.preamble__entry {
+    font-size: 1.4em;
+}
+
+.preamble__entry--small {
+    font-size: 1em;
+}
+
+/* Chatlog */
+
+.chatlog {
+    max-width: 100%;
+}
+
+.chatlog__message-group {
+    display: grid;
+    margin: 0 0.6em;
+    padding: 0.9em 0;
+    border-top: 1px solid;
+    grid-template-columns: auto 1fr;
+}
+
+.chatlog__author-avatar-container {
+    grid-column: 1;
+    width: 40px;
+    height: 40px;
+}
+
+.chatlog__author-avatar {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
+.chatlog__messages {
+    grid-column: 2;
+    margin-left: 1.2em;
+    min-width: 50%;
+}
+
+.chatlog__author-name {
+    font-weight: 500;
+}
+
+.chatlog__timestamp {
+    margin-left: 0.3em;
+    font-size: 0.75em;
+}
+
+.chatlog__message {
+    padding: 0.1em 0.3em;
+    margin: 0 -0.3em;
+    background-color: transparent;
+    transition: background-color 1s ease;
+}
+
+.chatlog__content {
+    font-size: 0.95em;
+    word-wrap: break-word;
+}
+
+.chatlog__edited-timestamp {
+    margin-left: 0.15em;
+    font-size: 0.8em;
+}
+
+.chatlog__attachment {
+    margin-top: 0.3em;
+}
+
+.chatlog__attachment-thumbnail {
+    vertical-align: top;
+    max-width: 45vw;
+    max-height: 500px;
+    border-radius: 3px;
+}
+
+.chatlog__embed {
+    display: flex;
+    margin-top: 0.3em;
+    max-width: 520px;
+}
+
+.chatlog__embed-color-pill {
+    flex-shrink: 0;
+    width: 0.25em;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.chatlog__embed-content-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em 0.6em;
+    border: 1px solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.chatlog__embed-content {
+    display: flex;
+    width: 100%;
+}
+
+.chatlog__embed-text {
+    flex: 1;
+}
+
+.chatlog__embed-author {
+    display: flex;
+    margin-bottom: 0.3em;
+    align-items: center;
+}
+
+.chatlog__embed-author-icon {
+    margin-right: 0.5em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.chatlog__embed-author-name {
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-title {
+    margin-bottom: 0.2em;
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-description {
+    font-weight: 500;
+    font-size: 0.85em;
+}
+
+.chatlog__embed-fields {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chatlog__embed-field {
+    flex: 0;
+    min-width: 100%;
+    max-width: 506px;
+    padding-top: 0.6em;
+    font-size: 0.875em;
+}
+
+.chatlog__embed-field--inline {
+    flex: 1;
+    flex-basis: auto;
+    min-width: 150px;
+}
+
+.chatlog__embed-field-name {
+    margin-bottom: 0.2em;
+    font-weight: 600;
+}
+
+.chatlog__embed-field-value {
+    font-weight: 500;
+}
+
+.chatlog__embed-thumbnail {
+    flex: 0;
+    margin-left: 1.2em;
+    max-width: 80px;
+    max-height: 80px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-image-container {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-image {
+    max-width: 500px;
+    max-height: 400px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-footer {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-footer-icon {
+    margin-right: 0.2em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.chatlog__embed-footer-text {
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+.chatlog__reactions {
+    display: flex;
+}
+
+.chatlog__reaction {
+    display: flex;
+    align-items: center;
+    margin: 0.35em 0.1em 0.1em 0.1em;
+    padding: 0.2em 0.35em;
+    border-radius: 3px;
+}
+
+.chatlog__reaction-count {
+    min-width: 9px;
+    margin-left: 0.35em;
+    font-size: 0.875em;
+}
+
+.chatlog__bot-tag {
+    position: relative;
+    top: -.2em;
+    margin-left: 0.3em;
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+    vertical-align: middle;
+    line-height: 1.3;
+    background: #7289da;
+    color: #ffffff;
+    font-size: 0.625em;
+    font-weight: 500;
+}
+
+/* Postamble */
+
+.postamble {
+    margin: 1.4em 0.3em 0.6em 0.3em;
+    padding: 1em;
+    border-top: 1px solid;
+}
+    </style>
+    <style>
+        /* General */
+
+body {
+    background-color: #36393e;
+    color: #dcddde;
+}
+
+a {
+    color: #0096cf;
+}
+
+.spoiler-text {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.spoiler--hidden .spoiler-text {
+    background-color: #202225;
+}
+
+.spoiler--hidden:hover .spoiler-text {
+    background-color: rgba(32, 34, 37, 0.8);
+}
+
+.quote {
+    border-color: #4f545c;
+}
+
+.pre {
+    background-color: #2f3136 !important;
+}
+
+.pre--multiline {
+    border-color: #282b30 !important;
+    color: #b9bbbe !important;
+}
+
+/* === Preamble === */
+
+.preamble__entry {
+    color: #ffffff;
+}
+
+/* Chatlog */
+
+.chatlog__message-group {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.chatlog__author-name {
+    color: #ffffff;
+}
+
+.chatlog__timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__message--highlighted {
+    background-color: rgba(114, 137, 218, 0.2) !important;
+}
+
+.chatlog__message--pinned {
+    background-color: rgba(249, 168, 37, 0.05);
+}
+
+.chatlog__edited-timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__embed-color-pill--default {
+    background-color: rgba(79, 84, 92, 1);
+}
+
+.chatlog__embed-content-container {
+    background-color: rgba(46, 48, 54, 0.3);
+    border-color: rgba(46, 48, 54, 0.6);
+}
+
+.chatlog__embed-author-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-author-name-link {
+    color: #ffffff;
+}
+
+.chatlog__embed-title {
+    color: #ffffff;
+}
+
+.chatlog__embed-description {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__embed-field-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-field-value {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__embed-footer {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__reaction {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.chatlog__reaction-count {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Postamble */
+
+.postamble {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.postamble__entry {
+    color: #ffffff;
+}
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.pre--multiline').forEach(block => hljs.highlightBlock(block));
+        });
+    </script>
+
+    <script>
+        function scrollToMessage(event, id) {
+            var element = document.getElementById('message-' + id);
+
+            if (element) {
+                event.preventDefault();
+
+                element.classList.add('chatlog__message--highlighted');
+
+                window.scrollTo({
+                    top: element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - (window.innerHeight / 2),
+                    behavior: 'smooth'
+                });
+
+                window.setTimeout(function() {
+                    element.classList.remove('chatlog__message--highlighted');
+                }, 2000);
+            }
+        }
+
+        function showSpoiler(event, element) {
+            if (element && element.classList.contains('spoiler--hidden')) {
+                event.preventDefault();
+                element.classList.remove('spoiler--hidden');
+            }
+        }
+    </script>
+</head>
+<body>
+
+<div class="preamble">
+    <div class="preamble__guild-icon-container">
+        <img class="preamble__guild-icon" src="https://cdn.discordapp.com/icons/645232261159190548/0db6e8bbf2f8cc79b3516198a94b28f3.png" alt="Guild icon">
+    </div>
+    <div class="preamble__entries-container">
+        <div class="preamble__entry">雑！ｻｲﾄ管理・ログ</div>
+        <div class="preamble__entry">Github区画 / private-7yultukuri7／discord-zatsukomu</div>
+
+            <div class="preamble__entry preamble__entry--small">https://github.com/7yultukuri7/discord-zatsukomu
+__**zatsukomu.tk**__
+==================================================
+製作者によってドメイン、ホストサーバーが管理・運営されています。
+==================================================
+このサイトのログインシステム機能は、7yultukuri7(id: 352394784440320020)によって作成された機能です。このホストサーバーのスクリプトは、世界中には公開したくありません。(限定公開となります。)
+また、製作者が運営を去ったあとにはこのサイトにアクセス・利用できなくなる可能性がございます。
+アクセス・利用できなくなったからと言っていかなる場合であろうとも後継の機能制作・実装する事を禁じます。</div>
+
+    </div>
+</div>
+
+<div class="chatlog">
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Nov-19 04:30 PM</span>
+
+            <div class="chatlog__message " data-message-id="650237269458026517" id="message-650237269458026517">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/0924a55f1900819573b4bae55cb9a2da920f5326">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/0924a55f1900819573b4bae55cb9a2da920f5326">`0924a55`</a> <img class="emoji " alt="🌦" title="🌦" src="https://twemoji.maxcdn.com/2/72x72/1f326.png"><img class="emoji " alt="🎡" title="🎡" src="https://twemoji.maxcdn.com/2/72x72/1f3a1.png"> Updated with Glitch - Glitch (5u420a200nnvyljbjzm9-discord)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-Dec-19 08:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="652104270203715606" id="message-652104270203715606">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/4cb0c28b7b5439bac1be024ccfb8603f9857c4e7">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/4cb0c28b7b5439bac1be024ccfb8603f9857c4e7">`4cb0c28`</a> <img class="emoji " alt="🙉" title="🙉" src="https://twemoji.maxcdn.com/2/72x72/1f649.png"><img class="emoji " alt="🙆" title="🙆" src="https://twemoji.maxcdn.com/2/72x72/1f646.png"> Updated with Glitch - Glitch (5u420a200nnvyljbjzm9-discord)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-Dec-19 08:39 PM</span>
+
+            <div class="chatlog__message " data-message-id="652111858240847874" id="message-652111858240847874">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/releases/tag/v2.0.0">
+                                                    <div class="markdown">[7yultukuri7/discord-zatsukomu] New release published: v2.0.0</div>
+                                                </a>
+                                        </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="652111860841185280" id="message-652111860841185280">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">[7yultukuri7/discord-zatsukomu] New tag created: v2.0.0</div>
+                                        </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-Dec-19 08:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="652115073321533476" id="message-652115073321533476">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/4e96047a1cea532862beb376cd348f13ea4e0b27">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/4e96047a1cea532862beb376cd348f13ea4e0b27">`4e96047`</a> <img class="emoji " alt="📷" title="📷" src="https://twemoji.maxcdn.com/2/72x72/1f4f7.png"><img class="emoji " alt="🐋" title="🐋" src="https://twemoji.maxcdn.com/2/72x72/1f40b.png"> Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="652115566559232016" id="message-652115566559232016">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/0e47677742fefabd648ad555f3baa6d98a5e482b">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/0e47677742fefabd648ad555f3baa6d98a5e482b">`0e47677`</a> <img class="emoji " alt="🐿" title="🐿" src="https://twemoji.maxcdn.com/2/72x72/1f43f.png"><img class="emoji " alt="🍮" title="🍮" src="https://twemoji.maxcdn.com/2/72x72/1f36e.png"> Updated with Glitch - Glitch (main-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">24-Dec-19 08:38 PM</span>
+
+            <div class="chatlog__message " data-message-id="658996932492132353" id="message-658996932492132353">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/721c7ccf221a53ec86ee6e0c554d44fdeaec9feb">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/721c7ccf221a53ec86ee6e0c554d44fdeaec9feb">`721c7cc`</a> <img class="emoji " alt="🏘" title="🏘" src="https://twemoji.maxcdn.com/2/72x72/1f3d8.png"><img class="emoji " alt="🍀" title="🍀" src="https://twemoji.maxcdn.com/2/72x72/1f340.png"> Updated with Glitch - Glitch (main-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">24-Dec-19 09:08 PM</span>
+
+            <div class="chatlog__message " data-message-id="659004548672782336" id="message-659004548672782336">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/4665dca8386b0c384fdb63941abe9a1a2dc8e049">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/4665dca8386b0c384fdb63941abe9a1a2dc8e049">`4665dca`</a> <img class="emoji " alt="🗼" title="🗼" src="https://twemoji.maxcdn.com/2/72x72/1f5fc.png"><img class="emoji " alt="🚉" title="🚉" src="https://twemoji.maxcdn.com/2/72x72/1f689.png"> Updated with Glitch - Glitch (main-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">24-Dec-19 09:40 PM</span>
+
+            <div class="chatlog__message " data-message-id="659012523135336449" id="message-659012523135336449">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/7b5fb4c09c11da2393d5b17a7e466b77af1bc733">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/7b5fb4c09c11da2393d5b17a7e466b77af1bc733">`7b5fb4c`</a> <img class="emoji " alt="🏏" title="🏏" src="https://twemoji.maxcdn.com/2/72x72/1f3cf.png"><img class="emoji " alt="🙅" title="🙅" src="https://twemoji.maxcdn.com/2/72x72/1f645.png"> Updated with Glitch - Glitch (main-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">28-Dec-19 09:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="660456282456719373" id="message-660456282456719373">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/6180703ebb95772ac3e853d27307f28ea42aa60e">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/6180703ebb95772ac3e853d27307f28ea42aa60e">`6180703`</a> <img class="emoji " alt="🍙" title="🍙" src="https://twemoji.maxcdn.com/2/72x72/1f359.png"><img class="emoji " alt="☕" title="☕" src="https://twemoji.maxcdn.com/2/72x72/2615.png">️ Updated with Glitch - Glitch (main-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">28-Dec-19 09:44 PM</span>
+
+            <div class="chatlog__message " data-message-id="660463097508528129" id="message-660463097508528129">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/0b9c15479b69952a63e71576280a31d706725a40">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/0b9c15479b69952a63e71576280a31d706725a40">`0b9c154`</a> <img class="emoji " alt="😅" title="😅" src="https://twemoji.maxcdn.com/2/72x72/1f605.png"><img class="emoji " alt="🎂" title="🎂" src="https://twemoji.maxcdn.com/2/72x72/1f382.png"> Updated with Glitch - Glitch (main-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">04-Jan-20 08:49 PM</span>
+
+            <div class="chatlog__message " data-message-id="662986042730610688" id="message-662986042730610688">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/082853930d1accc597bc8af5c7ee69ecd4db540a">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/082853930d1accc597bc8af5c7ee69ecd4db540a">`0828539`</a> <img class="emoji " alt="🐗" title="🐗" src="https://twemoji.maxcdn.com/2/72x72/1f417.png"><img class="emoji " alt="💪" title="💪" src="https://twemoji.maxcdn.com/2/72x72/1f4aa.png"> Updated with Glitch - Glitch (main-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">14-Jan-20 08:27 PM</span>
+
+            <div class="chatlog__message " data-message-id="666604396884262923" id="message-666604396884262923">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/91d58cd184f175dbf6abf882f136e8c07d680b57">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/91d58cd184f175dbf6abf882f136e8c07d680b57">`91d58cd`</a> <img class="emoji " alt="👝" title="👝" src="https://twemoji.maxcdn.com/2/72x72/1f45d.png"><img class="emoji " alt="🍧" title="🍧" src="https://twemoji.maxcdn.com/2/72x72/1f367.png"> Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">16-Jan-20 09:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="667342490340294656" id="message-667342490340294656">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/b8a1bd75952cd08f0840ae23d6c96cd5f5495be9">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/b8a1bd75952cd08f0840ae23d6c96cd5f5495be9">`b8a1bd7`</a> <img class="emoji " alt="👲" title="👲" src="https://twemoji.maxcdn.com/2/72x72/1f472.png"><img class="emoji " alt="🐉" title="🐉" src="https://twemoji.maxcdn.com/2/72x72/1f409.png"> Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">16-Jan-20 09:55 PM</span>
+
+            <div class="chatlog__message " data-message-id="667351259929640962" id="message-667351259929640962">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/0b10df99b11f5e22a6191c3a231dfff5017ad5fa">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/0b10df99b11f5e22a6191c3a231dfff5017ad5fa">`0b10df9`</a> <img class="emoji " alt="🎖" title="🎖" src="https://twemoji.maxcdn.com/2/72x72/1f396.png"><img class="emoji " alt="🐉" title="🐉" src="https://twemoji.maxcdn.com/2/72x72/1f409.png"> Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="667352428009750539" id="message-667352428009750539">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/dd507ddd84ed2d13fb4d8e9dec099b17c602fa03">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/dd507ddd84ed2d13fb4d8e9dec099b17c602fa03">`dd507dd`</a> <img class="emoji " alt="🧀" title="🧀" src="https://twemoji.maxcdn.com/2/72x72/1f9c0.png"><img class="emoji " alt="🎡" title="🎡" src="https://twemoji.maxcdn.com/2/72x72/1f3a1.png"> Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">16-Jan-20 10:19 PM</span>
+
+            <div class="chatlog__message " data-message-id="667357227782504448" id="message-667357227782504448">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/9b827d0594b48c9224cb63fb31a3c1a9f6a89f15">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/9b827d0594b48c9224cb63fb31a3c1a9f6a89f15">`9b827d0`</a> <img class="emoji " alt="🌏" title="🌏" src="https://twemoji.maxcdn.com/2/72x72/1f30f.png"><img class="emoji " alt="🌼" title="🌼" src="https://twemoji.maxcdn.com/2/72x72/1f33c.png"> Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">16-Jan-20 10:27 PM</span>
+
+            <div class="chatlog__message " data-message-id="667359300825513984" id="message-667359300825513984">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/33a4f7a6fd5bb3163c4186430f66b8b905c5b295">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/33a4f7a6fd5bb3163c4186430f66b8b905c5b295">`33a4f7a`</a> <img class="emoji " alt="👀" title="👀" src="https://twemoji.maxcdn.com/2/72x72/1f440.png"><img class="emoji " alt="🎂" title="🎂" src="https://twemoji.maxcdn.com/2/72x72/1f382.png"> Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="667359420690202625" id="message-667359420690202625">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/912c666cf0b1b367fe60e2d55f9760207fcf16e6">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/912c666cf0b1b367fe60e2d55f9760207fcf16e6">`912c666`</a> OK! by 7yultukuri7 - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">18-Jan-20 08:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="668053651998244864" id="message-668053651998244864">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/1adef1e8df33ec9dd80051708d5470d72a3bb237">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/1adef1e8df33ec9dd80051708d5470d72a3bb237">`1adef1e`</a> 読み込み高速化するやつ - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">22-Jan-20 02:14 PM</span>
+
+            <div class="chatlog__message " data-message-id="669409579234361374" id="message-669409579234361374">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/9c272c9e14c96b3ba7bfe6dd14a9b2312a46aa77">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/9c272c9e14c96b3ba7bfe6dd14a9b2312a46aa77">`9c272c9`</a> <img class="emoji " alt="💂" title="💂" src="https://twemoji.maxcdn.com/2/72x72/1f482.png"><img class="emoji " alt="🎖" title="🎖" src="https://twemoji.maxcdn.com/2/72x72/1f396.png"> Updated with Glitch nya - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">22-Jan-20 09:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="669520180849934347" id="message-669520180849934347">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/519e4528baf168e59acf211c93e8958ce521b842">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/519e4528baf168e59acf211c93e8958ce521b842">`519e452`</a> <img class="emoji " alt="🌘" title="🌘" src="https://twemoji.maxcdn.com/2/72x72/1f318.png"><img class="emoji " alt="📠" title="📠" src="https://twemoji.maxcdn.com/2/72x72/1f4e0.png"> Updated with Glitch hmhm - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="669521694645551105" id="message-669521694645551105">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/192710c066f836bc9937889f61a49fa105c449cf">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/192710c066f836bc9937889f61a49fa105c449cf">`192710c`</a> <img class="emoji " alt="🎢" title="🎢" src="https://twemoji.maxcdn.com/2/72x72/1f3a2.png"><img class="emoji " alt="👐" title="👐" src="https://twemoji.maxcdn.com/2/72x72/1f450.png"> Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">23-Jan-20 09:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="669882624680001537" id="message-669882624680001537">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/0e3694138ce7fceb4d492a385261f0c3e748acf1">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/0e3694138ce7fceb4d492a385261f0c3e748acf1">`0e36941`</a> <img class="emoji " alt="👼" title="👼" src="https://twemoji.maxcdn.com/2/72x72/1f47c.png"><img class="emoji " alt="⚾" title="⚾" src="https://twemoji.maxcdn.com/2/72x72/26be.png">️ Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">23-Jan-20 09:53 PM</span>
+
+            <div class="chatlog__message " data-message-id="669887535350022164" id="message-669887535350022164">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/af7b6b95ecbdd3b2bc4a1f8d583f26aed0bc487f">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/af7b6b95ecbdd3b2bc4a1f8d583f26aed0bc487f">`af7b6b9`</a> <img class="emoji " alt="🐛" title="🐛" src="https://twemoji.maxcdn.com/2/72x72/1f41b.png"><img class="emoji " alt="🦁" title="🦁" src="https://twemoji.maxcdn.com/2/72x72/1f981.png"> Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">23-Jan-20 10:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="669891872503758859" id="message-669891872503758859">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/65edd1b40f241cddc9e6c5cbc6de9955604799b5">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/65edd1b40f241cddc9e6c5cbc6de9955604799b5">`65edd1b`</a> <img class="emoji " alt="🍎" title="🍎" src="https://twemoji.maxcdn.com/2/72x72/1f34e.png"><img class="emoji " alt="🏚" title="🏚" src="https://twemoji.maxcdn.com/2/72x72/1f3da.png"> Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">23-Jan-20 10:25 PM</span>
+
+            <div class="chatlog__message " data-message-id="669895400337178624" id="message-669895400337178624">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/2b7e5bb76063ddeeacab6768caed8e32e7ca7ac1">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/2b7e5bb76063ddeeacab6768caed8e32e7ca7ac1">`2b7e5bb`</a> <img class="emoji " alt="🍜" title="🍜" src="https://twemoji.maxcdn.com/2/72x72/1f35c.png"><img class="emoji " alt="🛫" title="🛫" src="https://twemoji.maxcdn.com/2/72x72/1f6eb.png"> Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">28-Jan-20 08:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="671678202464305152" id="message-671678202464305152">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/5b65354c6e79027302c1e555929ff0c1cd91dad8">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/5b65354c6e79027302c1e555929ff0c1cd91dad8">`5b65354`</a> <img class="emoji " alt="🏆" title="🏆" src="https://twemoji.maxcdn.com/2/72x72/1f3c6.png"><img class="emoji " alt="⛪" title="⛪" src="https://twemoji.maxcdn.com/2/72x72/26ea.png">️ Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="671678583298719784" id="message-671678583298719784">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/ec2f06d7d9d4b1ce615a33d78b8e43ff00aed471">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/ec2f06d7d9d4b1ce615a33d78b8e43ff00aed471">`ec2f06d`</a> sqlite3 いらない - 7yultukuri7</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Jan-20 07:53 PM</span>
+
+            <div class="chatlog__message " data-message-id="672393991475560449" id="message-672393991475560449">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/8729b84f5c4c625bd62dda0bed6bf95931585166">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/8729b84f5c4c625bd62dda0bed6bf95931585166">`8729b84`</a> <img class="emoji " alt="💡" title="💡" src="https://twemoji.maxcdn.com/2/72x72/1f4a1.png"><img class="emoji " alt="🍲" title="🍲" src="https://twemoji.maxcdn.com/2/72x72/1f372.png"> Updated with Glitch - Glitch (main-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Jan-20 08:08 PM</span>
+
+            <div class="chatlog__message " data-message-id="672397842253348864" id="message-672397842253348864">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/releases/tag/v2.0.1-end">
+                                                    <div class="markdown">[7yultukuri7/discord-zatsukomu] New release published: v2.0.1-end</div>
+                                                </a>
+                                        </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="672397843696189440" id="message-672397843696189440">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">[7yultukuri7/discord-zatsukomu] New tag created: v2.0.1-end</div>
+                                        </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Jan-20 08:23 PM</span>
+
+            <div class="chatlog__message " data-message-id="672401534025334785" id="message-672401534025334785">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/13b9f534602bcb7e208d71a10e70b423116d16af">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/13b9f534602bcb7e208d71a10e70b423116d16af">`13b9f53`</a> <img class="emoji " alt="🗾" title="🗾" src="https://twemoji.maxcdn.com/2/72x72/1f5fe.png"><img class="emoji " alt="🍚" title="🍚" src="https://twemoji.maxcdn.com/2/72x72/1f35a.png"> Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">01-Feb-20 08:19 PM</span>
+
+            <div class="chatlog__message " data-message-id="673125243858059274" id="message-673125243858059274">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/9ca83c517b61faa142d5fc79c89a3f1f923c9581">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/9ca83c517b61faa142d5fc79c89a3f1f923c9581">`9ca83c5`</a> <img class="emoji " alt="🌉" title="🌉" src="https://twemoji.maxcdn.com/2/72x72/1f309.png"><img class="emoji " alt="💐" title="💐" src="https://twemoji.maxcdn.com/2/72x72/1f490.png"> Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">01-Feb-20 08:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="673127557465374720" id="message-673127557465374720">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/b7047beeb2b8c2c629f30029d64278897901bc6b">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/b7047beeb2b8c2c629f30029d64278897901bc6b">`b7047be`</a> <img class="emoji " alt="🍗" title="🍗" src="https://twemoji.maxcdn.com/2/72x72/1f357.png"><img class="emoji " alt="👩" title="👩" src="https://twemoji.maxcdn.com/2/72x72/1f469.png"> Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">01-Feb-20 09:49 PM</span>
+
+            <div class="chatlog__message " data-message-id="673147913584508937" id="message-673147913584508937">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/f422e3fcebf8eb0c64bd7ade41faf4c644525d55">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/f422e3fcebf8eb0c64bd7ade41faf4c644525d55">`f422e3f`</a> <img class="emoji " alt="🏟" title="🏟" src="https://twemoji.maxcdn.com/2/72x72/1f3df.png"><img class="emoji " alt="🏥" title="🏥" src="https://twemoji.maxcdn.com/2/72x72/1f3e5.png"> Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">01-Feb-20 10:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="673152926885216295" id="message-673152926885216295">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/cf9d5c588b2924c61398495f4b28a16c9e8eecea">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/cf9d5c588b2924c61398495f4b28a16c9e8eecea">`cf9d5c5`</a> <img class="emoji " alt="🏪" title="🏪" src="https://twemoji.maxcdn.com/2/72x72/1f3ea.png"><img class="emoji " alt="💇" title="💇" src="https://twemoji.maxcdn.com/2/72x72/1f487.png"> Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">14-Feb-20 02:19 PM</span>
+
+            <div class="chatlog__message " data-message-id="677745625227591700" id="message-677745625227591700">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/e4910786dc8a581b64a837f93efa4155d3b77a4a">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/e4910786dc8a581b64a837f93efa4155d3b77a4a">`e491078`</a> <img class="emoji " alt="🔔" title="🔔" src="https://twemoji.maxcdn.com/2/72x72/1f514.png"><img class="emoji " alt="🗽" title="🗽" src="https://twemoji.maxcdn.com/2/72x72/1f5fd.png"> Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">14-Feb-20 02:58 PM</span>
+
+            <div class="chatlog__message " data-message-id="677755482663813130" id="message-677755482663813130">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/2be9187ed517695b168a52453f31d5b30e1e9c2a">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/2be9187ed517695b168a52453f31d5b30e1e9c2a">`2be9187`</a> <img class="emoji " alt="🍠" title="🍠" src="https://twemoji.maxcdn.com/2/72x72/1f360.png"><img class="emoji " alt="🍋" title="🍋" src="https://twemoji.maxcdn.com/2/72x72/1f34b.png"> Updated with Glitch 定期 - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">14-Feb-20 04:43 PM</span>
+
+            <div class="chatlog__message " data-message-id="677781910449291288" id="message-677781910449291288">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/f20b2f85c7e80f4dff6fe8c86dd78e271bf71b64">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/f20b2f85c7e80f4dff6fe8c86dd78e271bf71b64">`f20b2f8`</a> <img class="emoji " alt="👷" title="👷" src="https://twemoji.maxcdn.com/2/72x72/1f477.png"><img class="emoji " alt="💽" title="💽" src="https://twemoji.maxcdn.com/2/72x72/1f4bd.png"> Updated with Glitch 一旦 - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">14-Feb-20 10:13 PM</span>
+
+            <div class="chatlog__message " data-message-id="677865068280676382" id="message-677865068280676382">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/0f3ac6c490f50fdc8a4242686fc73539d0a08db3">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/0f3ac6c490f50fdc8a4242686fc73539d0a08db3">`0f3ac6c`</a> <img class="emoji " alt="🎂" title="🎂" src="https://twemoji.maxcdn.com/2/72x72/1f382.png"><img class="emoji " alt="🚀" title="🚀" src="https://twemoji.maxcdn.com/2/72x72/1f680.png"> Updated with Glitch session対応 - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">23-Feb-20 01:57 PM</span>
+
+            <div class="chatlog__message " data-message-id="681001681034805330" id="message-681001681034805330">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/946e35eb91a02c3706a5784ca95abd10c9df28a4">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/946e35eb91a02c3706a5784ca95abd10c9df28a4">`946e35e`</a> <img class="emoji " alt="🍞" title="🍞" src="https://twemoji.maxcdn.com/2/72x72/1f35e.png"><img class="emoji " alt="🚃" title="🚃" src="https://twemoji.maxcdn.com/2/72x72/1f683.png"> Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">23-Feb-20 02:37 PM</span>
+
+            <div class="chatlog__message " data-message-id="681011794520571933" id="message-681011794520571933">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/bd317255c4e74100e756bdabb8b40158d0346cc1">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/bd317255c4e74100e756bdabb8b40158d0346cc1">`bd31725`</a> <img class="emoji " alt="🙆" title="🙆" src="https://twemoji.maxcdn.com/2/72x72/1f646.png"><img class="emoji " alt="🤘" title="🤘" src="https://twemoji.maxcdn.com/2/72x72/1f918.png"> Updated with Glitch --- デザイン - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">23-Feb-20 06:12 PM</span>
+
+            <div class="chatlog__message " data-message-id="681065734817972244" id="message-681065734817972244">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/99f8df497ede6dfa3e588c02e4c580ada2a6981c">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/99f8df497ede6dfa3e588c02e4c580ada2a6981c">`99f8df4`</a> <img class="emoji " alt="🏤" title="🏤" src="https://twemoji.maxcdn.com/2/72x72/1f3e4.png"><img class="emoji " alt="🐧" title="🐧" src="https://twemoji.maxcdn.com/2/72x72/1f427.png"> Updated with Glitch ログイン問題A 解決 - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">23-Feb-20 09:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="681112265621241860" id="message-681112265621241860">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/f0002e3b922bab55398962d452790b0822ae2d26">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/f0002e3b922bab55398962d452790b0822ae2d26">`f0002e3`</a> <img class="emoji " alt="☎" title="☎" src="https://twemoji.maxcdn.com/2/72x72/260e.png">️<img class="emoji " alt="🍇" title="🍇" src="https://twemoji.maxcdn.com/2/72x72/1f347.png"> Updated with Glitch --- メインページ - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">24-Feb-20 12:44 PM</span>
+
+            <div class="chatlog__message " data-message-id="681345643721261072" id="message-681345643721261072">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/dcc08c68269241024be6c8cad2f7809956c6d199">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/dcc08c68269241024be6c8cad2f7809956c6d199">`dcc08c6`</a> <img class="emoji " alt="⛄" title="⛄" src="https://twemoji.maxcdn.com/2/72x72/26c4.png">️<img class="emoji " alt="🗃" title="🗃" src="https://twemoji.maxcdn.com/2/72x72/1f5c3.png"> Updated with Glitch --- とりあえず - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">24-Feb-20 12:55 PM</span>
+
+            <div class="chatlog__message " data-message-id="681348444828598302" id="message-681348444828598302">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/d78a7b9b634a6d3cb5d2aab234c50fdf6d83028e">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/d78a7b9b634a6d3cb5d2aab234c50fdf6d83028e">`d78a7b9`</a> <img class="emoji " alt="🕋" title="🕋" src="https://twemoji.maxcdn.com/2/72x72/1f54b.png"><img class="emoji " alt="🎁" title="🎁" src="https://twemoji.maxcdn.com/2/72x72/1f381.png"> Updated with Glitch --- 訂正 - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">24-Feb-20 01:03 PM</span>
+
+            <div class="chatlog__message " data-message-id="681350509361233931" id="message-681350509361233931">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/d5687c3ad2f58fd27e6d570722a35d615e0fdd87">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/d5687c3ad2f58fd27e6d570722a35d615e0fdd87">`d5687c3`</a> <img class="emoji " alt="⛺" title="⛺" src="https://twemoji.maxcdn.com/2/72x72/26fa.png">️<img class="emoji " alt="🌱" title="🌱" src="https://twemoji.maxcdn.com/2/72x72/1f331.png"> Updated with Glitch --- v2.1 - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="681351651776266240" id="message-681351651776266240">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/releases/tag/v2.1.0">
+                                                    <div class="markdown">[7yultukuri7/discord-zatsukomu] New release published: v2.1.0</div>
+                                                </a>
+                                        </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="681351653361713202" id="message-681351653361713202">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">[7yultukuri7/discord-zatsukomu] New tag created: v2.1.0</div>
+                                        </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">28-Feb-20 05:50 PM</span>
+
+            <div class="chatlog__message " data-message-id="682872127200034828" id="message-682872127200034828">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/959886cf4b02bdc6c98193439288b4218cb133cf">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/959886cf4b02bdc6c98193439288b4218cb133cf">`959886c`</a> <img class="emoji " alt="🐞" title="🐞" src="https://twemoji.maxcdn.com/2/72x72/1f41e.png"><img class="emoji " alt="🌱" title="🌱" src="https://twemoji.maxcdn.com/2/72x72/1f331.png"> Updated with Glitch - Glitch (main-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">29-Feb-20 04:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="683220100924571678" id="message-683220100924571678">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/7bd21039390008ab11a5c5b23a68e5ecc2274fe0">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/7bd21039390008ab11a5c5b23a68e5ecc2274fe0">`7bd2103`</a> <img class="emoji " alt="💘" title="💘" src="https://twemoji.maxcdn.com/2/72x72/1f498.png"><img class="emoji " alt="🎑" title="🎑" src="https://twemoji.maxcdn.com/2/72x72/1f391.png"> Updated with Glitch - Glitch (main-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">29-Feb-20 05:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="683226362885963777" id="message-683226362885963777">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/50a3f56c6e34d85f2f25cc149e951c73c25231c2">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/50a3f56c6e34d85f2f25cc149e951c73c25231c2">`50a3f56`</a> <img class="emoji " alt="🐚" title="🐚" src="https://twemoji.maxcdn.com/2/72x72/1f41a.png"><img class="emoji " alt="🌇" title="🌇" src="https://twemoji.maxcdn.com/2/72x72/1f307.png"> Updated with Glitch --- twemoji,crossorigin - Glitch (main-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="683228063571509259" id="message-683228063571509259">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/releases/tag/v2.1.1">
+                                                    <div class="markdown">[7yultukuri7/discord-zatsukomu] New release published: v2.1.1</div>
+                                                </a>
+                                        </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="683228065362739200" id="message-683228065362739200">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">[7yultukuri7/discord-zatsukomu] New tag created: v2.1.1</div>
+                                        </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">07-Mar-20 10:22 PM</span>
+
+            <div class="chatlog__message " data-message-id="685839768206049283" id="message-685839768206049283">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/e2061cd946f3e8f856228c3ce4d723a8b462ef56">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/e2061cd946f3e8f856228c3ce4d723a8b462ef56">`e2061cd`</a> <img class="emoji " alt="🏗" title="🏗" src="https://twemoji.maxcdn.com/2/72x72/1f3d7.png"><img class="emoji " alt="🐓" title="🐓" src="https://twemoji.maxcdn.com/2/72x72/1f413.png"> Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="685840181370028117" id="message-685840181370028117">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/8d0007dfb17172b98e04af22c349fbb43686270d">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/8d0007dfb17172b98e04af22c349fbb43686270d">`8d0007d`</a> ✈️<img class="emoji " alt="🏌" title="🏌" src="https://twemoji.maxcdn.com/2/72x72/1f3cc.png"> Updated with Glitch--data - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="685841001465643055" id="message-685841001465643055">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/releases/tag/v2.1.2">
+                                                    <div class="markdown">[7yultukuri7/discord-zatsukomu] New release published: v2.1.2</div>
+                                                </a>
+                                        </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="685841002988175373" id="message-685841002988175373">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">[7yultukuri7/discord-zatsukomu] New tag created: v2.1.2</div>
+                                        </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">08-Mar-20 09:22 PM</span>
+
+            <div class="chatlog__message " data-message-id="686187172537303067" id="message-686187172537303067">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/37f3963bc92f86664d08cf7cc1abe006dbf6bbe1">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/37f3963bc92f86664d08cf7cc1abe006dbf6bbe1">`37f3963`</a> <img class="emoji " alt="🙇" title="🙇" src="https://twemoji.maxcdn.com/2/72x72/1f647.png"><img class="emoji " alt="🚶" title="🚶" src="https://twemoji.maxcdn.com/2/72x72/1f6b6.png"> Updated with Glitch - Glitch (main-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="686188721426792493" id="message-686188721426792493">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/releases/tag/v2.1.2-fix">
+                                                    <div class="markdown">[7yultukuri7/discord-zatsukomu] New release published: v2.1.2-fix</div>
+                                                </a>
+                                        </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="686188723754631218" id="message-686188723754631218">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">[7yultukuri7/discord-zatsukomu] New tag created: v2.1.2-fix</div>
+                                        </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">09-Mar-20 05:23 PM</span>
+
+            <div class="chatlog__message " data-message-id="686489211125497871" id="message-686489211125497871">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/adb0eeb6dba88c2f0c8d74438c621eea766efa3b">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/adb0eeb6dba88c2f0c8d74438c621eea766efa3b">`adb0eeb`</a> <img class="emoji " alt="🎋" title="🎋" src="https://twemoji.maxcdn.com/2/72x72/1f38b.png"><img class="emoji " alt="👧" title="👧" src="https://twemoji.maxcdn.com/2/72x72/1f467.png"> Updated with Glitch -- ローディングアニメーション - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">07-Apr-20 10:52 AM</span>
+
+            <div class="chatlog__message " data-message-id="696900133710987265" id="message-696900133710987265">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/7453cc5b4a4c0ffd38408385e27ca3021997a2d5">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/7453cc5b4a4c0ffd38408385e27ca3021997a2d5">`7453cc5`</a> <img class="emoji " alt="🐃" title="🐃" src="https://twemoji.maxcdn.com/2/72x72/1f403.png"><img class="emoji " alt="👭" title="👭" src="https://twemoji.maxcdn.com/2/72x72/1f46d.png"> Updated with Glitch - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">07-Apr-20 11:41 AM</span>
+
+            <div class="chatlog__message " data-message-id="696912604441870346" id="message-696912604441870346">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars0.githubusercontent.com/u/49602287?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/7yultukuri7">7yultukuri7</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/07e00f726b8c1eae416424a9beb147cdc1157174">
+                                                    <div class="markdown">[discord-zatsukomu:glitch] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/07e00f726b8c1eae416424a9beb147cdc1157174">`07e00f7`</a> ⏲<img class="emoji " alt="🌂" title="🌂" src="https://twemoji.maxcdn.com/2/72x72/1f302.png"> Updated with Glitch-/ - Glitch (dev-5u420a200nnvyljbjzm9)</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/650236968176844840/df91181b3f1cf0ef1592fbe18e0962d7.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="GitHub#0000" data-user-id="650236968176844840" style="">GitHub</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">03-Sep-20 05:48 PM</span>
+
+            <div class="chatlog__message " data-message-id="751000778277126195" id="message-751000778277126195">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill chatlog__embed-color-pill--default"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars2.githubusercontent.com/in/16809?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/apps/whitesource-bolt-for-github">whitesource-bolt-for-github[bot]</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <div class="markdown">[7yultukuri7/discord-zatsukomu] New branch created: whitesource/configure</div>
+                                        </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="751000783398371391" id="message-751000783398371391">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(114,137,218,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars2.githubusercontent.com/in/16809?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/apps/whitesource-bolt-for-github">whitesource-bolt-for-github[bot]</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/commit/0ff9bf68dd9ddcaff7568a5ba51804cb061266d9">
+                                                    <div class="markdown">[discord-zatsukomu:whitesource/configure] 1 new commit</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown"><a href="https://github.com/7yultukuri7/discord-zatsukomu/commit/0ff9bf68dd9ddcaff7568a5ba51804cb061266d9">`0ff9bf6`</a> Add .whitesource configuration file - whitesource-bolt-for-github[bot]</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+            <div class="chatlog__message " data-message-id="751000788104380468" id="message-751000788104380468">
+                <div class="chatlog__content">
+                    <div class="markdown"> </div>
+                </div>
+
+
+                    <div class="chatlog__embed">
+                            <div class="chatlog__embed-color-pill" style="background-color: rgba(0,152,0,255)"></div>
+
+                        <div class="chatlog__embed-content-container">
+                            <div class="chatlog__embed-content">
+                                <div class="chatlog__embed-text">
+                                        <div class="chatlog__embed-author">
+                                                <img class="chatlog__embed-author-icon" src="https://avatars2.githubusercontent.com/in/16809?v=4" alt="Author icon">
+
+                                                <span class="chatlog__embed-author-name">
+                                                        <a class="chatlog__embed-author-name-link" href="https://github.com/apps/whitesource-bolt-for-github">whitesource-bolt-for-github[bot]</a>
+                                                </span>
+                                        </div>
+
+                                        <div class="chatlog__embed-title">
+                                                <a class="chatlog__embed-title-link" href="https://github.com/7yultukuri7/discord-zatsukomu/pull/1">
+                                                    <div class="markdown">[7yultukuri7/discord-zatsukomu] Pull request opened: #1 Configure WhiteSource Bolt for GitHub</div>
+                                                </a>
+                                        </div>
+
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown">Welcome to <a href="https://github.com/marketplace/whitesource-bolt">WhiteSource Bolt for GitHub</a>! This is an onboarding PR to help you understand and configure settings before WhiteSource starts scanning your repository for security vulnerabilities.
+
+:vertical_traffic_light: WhiteSource Bolt for GitHub will start scanning your repository only once you merge this Pull Request. To disable WhiteSource Bolt for GitHub, simply close this Pull Request. 
+
+
+
+---
+
+### What to Expect
+
+This PR contains a &#39;.whi...</div>
+                                        </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+</div>
+
+</div>
+
+<div class="postamble">
+    <div class="postamble__entry">Exported 68 message(s)</div>
+</div>
+
+</body>
+</html>
