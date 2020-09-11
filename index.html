@@ -2,6 +2,16 @@
     <head>
     </head>
     <body>
-zatsukomu-website-manage-log
+        <h1>zatsukomu-website-manage-log page list</h1>
+
+<ul>
+  {% for page in site.pages %}
+    <li>
+      <h2><a href="{{site.canonical_domain}}{{site.baseurl}}{{ page.url }}">{{ page.title }}</a></h2>
+      {{ post.excerpt }}
+    </li>
+  {% endfor %}
+</ul>
+
     </body>
 </html>
