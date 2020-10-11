@@ -3,7 +3,7 @@ theme: jekyll-theme-cayman
 collections:
   pages:
     output: true
-    
+defaults:  
   - scope:
       path: "log"
       type: "pages"
